@@ -181,15 +181,7 @@ RUN apt-get update
 
 #### Install python packages ####
 RUN python3 -m pip install --upgrade pip
-RUN python3 -m pip install --upgrade setuptools
-RUN python3 -m pip install numpy
-RUN python3 -m pip install opencv-contrib-python
-RUN python3 -m pip install pandas
-RUN python3 -m pip install wheel
-RUN python3 -m pip install scikit-learn
-RUN python3 -m pip install keras
-RUN python3 -m pip install tensorflow
-RUN python3 -m pip install pynput
+RUN python3 -m pip install --upgrade setuptools numpy==1.26.4 opencv-contrib-python pandas wheel scikit-learn keras tensorflow pynput
 
 #### Dependencies ####
 RUN apt-get install -y libgoogle-glog-dev libboost-all-dev libhdf5-serial-dev libatlas-base-dev
@@ -260,7 +252,8 @@ RUN git clone -b main https://github.com/open-mmlab/mmdeploy.git --recursive --d
         -DCUDNN_DIR=${CUDNN_DIR} \
         -DCMAKE_INSTALL_PREFIX=/usr/local \
     && make -j8 && make install
-
+ENV MMDEPLOY_DIR=/mmdeploy
+ENV MMPOSE_DIR=/mmpose
 
 # Install ffmpeg libraries for video grabber utils
 RUN apt update && apt install -y ffmpeg \ 
